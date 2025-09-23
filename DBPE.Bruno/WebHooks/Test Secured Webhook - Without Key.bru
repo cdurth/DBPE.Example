@@ -1,0 +1,29 @@
+meta {
+  name: Test Secured Webhook - Without Key
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/api/WebHookDemo/test-secured-webhook
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "notificationType": "info",
+    "message": "This request should fail - no API key provided",
+    "priority": "normal"
+  }
+}
+
+docs {
+  This request intentionally omits the API key to demonstrate that the webhook security is working.
+
+  Expected result: The webhook should return 401 Unauthorized
+}

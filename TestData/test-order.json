@@ -1,0 +1,18 @@
+{
+  "OrderId": "12345",
+  "CustomerName": "John Doe",
+  "Amount": 150.75,
+  "OrderDate": "2025-01-14T10:30:00Z",
+  "Items": [
+    {
+      "ProductId": "PROD-001",
+      "Quantity": 2,
+      "Price": 25.99
+    },
+    {
+      "ProductId": "PROD-002", 
+      "Quantity": 1,
+      "Price": 98.77
+    }
+  ]
+}

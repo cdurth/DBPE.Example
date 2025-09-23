@@ -1,0 +1,21 @@
+meta {
+  name: Get Webhook Info
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:5000/api/WebHookDemo/webhook-test-info
+  body: none
+  auth: none
+}
+
+docs {
+  This endpoint provides information about the webhook security demo, including:
+  - Available API keys and their permissions
+  - Test endpoint details
+  - Example payloads
+  - Usage notes
+
+  Use this to understand how to test the secured webhook functionality.
+}

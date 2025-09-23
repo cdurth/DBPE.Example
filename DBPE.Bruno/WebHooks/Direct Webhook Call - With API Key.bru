@@ -1,0 +1,39 @@
+meta {
+  name: Direct Webhook Call - With API Key
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5000/webhooks/secured/notification
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  X-API-Key: whk_internal_abcdef67890
+}
+
+body:json {
+  {
+    "type": "warning",
+    "message": "Database backup completed with warnings",
+    "priority": "medium",
+    "metadata": {
+      "backupId": "backup-2024-01-20-1530",
+      "duration": "45 minutes",
+      "warnings": 3,
+      "size": "2.5GB"
+    },
+    "timestamp": "2024-01-20T15:30:00Z"
+  }
+}
+
+docs {
+  This makes a direct call to the secured webhook endpoint with a valid API key in the header.
+
+  The "internal-systems" API key (whk_internal_abcdef67890) has access to all webhook paths.
+
+  Expected result: 200 OK with successful processing response
+}

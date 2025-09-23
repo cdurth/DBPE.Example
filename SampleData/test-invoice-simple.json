@@ -1,0 +1,14 @@
+{
+  "InvoiceId": "INV-SIMPLE-001",
+  "CustomerName": "John Doe",
+  "Amount": 249.99,
+  "InvoiceDate": "2024-01-20T10:00:00Z",
+  "Items": [
+    {
+      "Description": "Monthly Subscription",
+      "Quantity": 1,
+      "UnitPrice": 249.99,
+      "Total": 249.99
+    }
+  ]
+}

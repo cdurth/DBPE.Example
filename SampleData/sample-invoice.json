@@ -1,0 +1,20 @@
+{
+  "InvoiceId": "INV-2024-001",
+  "CustomerName": "Acme Corporation",
+  "Amount": 1250.00,
+  "InvoiceDate": "2024-01-15T10:30:00Z",
+  "Items": [
+    {
+      "Description": "Software License",
+      "Quantity": 5,
+      "UnitPrice": 200.00,
+      "Total": 1000.00
+    },
+    {
+      "Description": "Support Services",
+      "Quantity": 1,
+      "UnitPrice": 250.00,
+      "Total": 250.00
+    }
+  ]
+}

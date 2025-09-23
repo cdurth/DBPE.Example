@@ -1,0 +1,16 @@
+# DBPE License File
+# Do not modify this file - any changes will invalidate the license
+
+DBPE-LICENSE-V1
+Company=Acme Corporation
+LicenseKey=DBPE-STD-ACME-20250718-DEMO
+LicenseType=Standard
+IssuedTo=demo@acme.com
+IssuedDate=2025-07-18
+ExpiresDate=2025-12-31
+Modules=WebHooks,FileWatcher,JobScheduler,WebServer,Messaging
+Features=Authentication,WriteBack,AdvancedScheduling,Analytics,UnlimitedWebHooks
+MaxInstances=10
+MaxConcurrentUsers=100
+TrialMode=false
+Signature=PLACEHOLDER-SIGNATURE-NEEDS-GENERATION

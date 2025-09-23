@@ -1,0 +1,26 @@
+{
+  "InvoiceId": "INV-2024-12345",
+  "CustomerName": "ACME Corporation",
+  "Amount": 5847.50,
+  "InvoiceDate": "2024-01-20T14:30:00Z",
+  "Items": [
+    {
+      "Description": "Professional Software License",
+      "Quantity": 5,
+      "UnitPrice": 899.00,
+      "Total": 4495.00
+    },
+    {
+      "Description": "Support & Maintenance (1 Year)",
+      "Quantity": 1,
+      "UnitPrice": 1200.00,
+      "Total": 1200.00
+    },
+    {
+      "Description": "Training Sessions",
+      "Quantity": 3,
+      "UnitPrice": 50.83,
+      "Total": 152.50
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+meta {
+  name: Test Different Notification Types
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:5000/api/WebHookDemo/test-secured-webhook
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "apiKey": "whk_test_123456789",
+    "notificationType": "{{type}}",
+    "message": "Testing {{type}} notification type",
+    "priority": "{{priority}}"
+  }
+}
+
+vars:pre-request {
+  type: info
+  priority: normal
+}
+
+docs {
+  This request tests different notification types.
+
+  You can change the variables to test:
+  - type: "alert", "info", or "warning"
+  - priority: "low", "normal", "high", or "critical"
+
+  The test API key (whk_test_123456789) is used which has limited access.
+}
+
+script:pre-request {
+  // Cycle through different notification types for testing
+  const types = ['alert', 'info', 'warning'];
+  const priorities = ['low', 'normal', 'high', 'critical'];
+
+  // You can uncomment these to randomize the test
+  // bru.setVar('type', types[Math.floor(Math.random() * types.length)]);
+  // bru.setVar('priority', priorities[Math.floor(Math.random() * priorities.length)]);
+}
