@@ -82,8 +82,9 @@ public class WebHookTestController : ControllerBase
         </div>
 
         <div class='test-section'>
-            <h3>Direct Webhook Test</h3>
-            <p><strong>Endpoint:</strong> /webhooks/secured/notification</p>
+            <h3>Payment Webhook Test (with Correlation)</h3>
+            <p><strong>Endpoint:</strong> /webhooks/payment/stripe</p>
+            <p><em>This tests the payment pipeline: webhook → PaymentConsumer → correlation completion</em></p>
 
             <label>API Key:</label>
             <select id='stripeApiKey'>
@@ -93,25 +94,26 @@ public class WebHookTestController : ControllerBase
                 <option value='invalid-key'>invalid-key (should fail)</option>
             </select>
 
-            <label>Notification Data:</label>
+            <label>Stripe Payment Data:</label>
             <textarea id='stripePayload'>{
-  ""type"": ""info"",
-  ""message"": ""Direct webhook test notification"",
-  ""priority"": ""normal"",
-  ""metadata"": {
-    ""source"": ""WebHookTestPage"",
-    ""testId"": ""direct-test-123"",
-    ""environment"": ""development""
-  },
-  ""timestamp"": ""2024-01-01T12:00:00Z""
+  ""id"": ""evt_test_webhook"",
+  ""type"": ""payment_intent.succeeded"",
+  ""data"": {
+    ""object"": {
+      ""id"": ""pi_test_correlation_123"",
+      ""amount"": 2000,
+      ""currency"": ""usd"",
+      ""status"": ""succeeded""
+    }
+  }
 }</textarea>
 
             <label>Callback URL (for correlation testing):</label>
             <input type='text' id='callbackUrl' value='https://ntfy.sh/dbpewebhooktest' placeholder='Enter callback URL' />
             <small style='display:block; margin-bottom:10px; color:#666;'>Use https://ntfy.sh/dbpewebhooktest for real-time notifications, or http://localhost:5000/test/callback/completion/ for local testing</small>
 
-            <button onclick='testDirectWebhook()'>Test Direct Webhook</button>
-            <button onclick='testDirectWebhookWithCorrelation()'>Test with Correlation ID</button>
+            <button onclick='testPaymentWebhook()'>Test Payment Webhook</button>
+            <button onclick='testPaymentWebhookWithCorrelation()'>Test Payment with Correlation</button>
             <div id='stripeResponse' class='response' style='display:none;'></div>
         </div>
 
@@ -188,12 +190,12 @@ public class WebHookTestController : ControllerBase
             }
         }
 
-        async function testDirectWebhook() {
+        async function testPaymentWebhook() {
             const apiKey = document.getElementById('stripeApiKey').value;
             const payload = document.getElementById('stripePayload').value;
 
             try {
-                const response = await fetch('/webhooks/secured/notification', {
+                const response = await fetch('/webhooks/payment/stripe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -210,10 +212,10 @@ public class WebHookTestController : ControllerBase
             }
         }
 
-        async function testDirectWebhookWithCorrelation() {
+        async function testPaymentWebhookWithCorrelation() {
             const apiKey = document.getElementById('stripeApiKey').value;
             const payload = document.getElementById('stripePayload').value;
-            const correlationId = 'test-correlation-' + Date.now();
+            const correlationId = 'payment-correlation-' + Date.now();
 
             // Get callback URL from input field, with fallback logic
             let callbackUrl = document.getElementById('callbackUrl').value.trim();
@@ -228,7 +230,7 @@ public class WebHookTestController : ControllerBase
             }
 
             try {
-                const response = await fetch('/webhooks/secured/notification', {
+                const response = await fetch('/webhooks/payment/stripe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -240,10 +242,12 @@ public class WebHookTestController : ControllerBase
                 });
 
                 const result = await response.text();
-                const message = `<strong>Correlation ID:</strong> ${correlationId}<br>
+                const message = `<strong>🔄 Payment Pipeline Test</strong><br>
+                                 <strong>Correlation ID:</strong> ${correlationId}<br>
                                  <strong>Callback URL:</strong> ${callbackUrl}<br>
-                                 <strong>Status:</strong> ${response.status}<br>
+                                 <strong>Webhook Status:</strong> ${response.status}<br>
                                  <strong>Response:</strong> ${result}<br>
+                                 <em>Now check PaymentConsumer logs for correlation completion...</em><br>
                                  <button onclick=""checkCallback('${correlationId}')"">Check Callback Status</button>`;
                 showResponse('stripeResponse', message, !response.ok);
 

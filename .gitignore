@@ -79,8 +79,9 @@ Reports/
 
 # Sensitive configuration
 appsettings.Development.json
+appsettings.json
 appsettings.*.json
-!appsettings.json
+!appsettings.sample.json
 
 # Database files
 *.mdf
